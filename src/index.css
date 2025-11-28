@@ -186,3 +186,146 @@ h1 {
 .delay-300 {
   animation-delay: 0.3s;
 }
+
+/* Responsive Design - Mobile First */
+
+/* Mobile devices (320px - 767px) */
+@media (max-width: 767px) {
+
+  /* Typography adjustments */
+  h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  /* Container spacing */
+  .container {
+    padding: 0 1rem;
+  }
+
+  /* Glass card mobile optimization */
+  .glass-card {
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+  }
+
+  /* Input field mobile optimization */
+  .input-field {
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+    padding-right: 7rem;
+  }
+
+  .input-btn {
+    padding: 0 1rem;
+    font-size: 0.875rem;
+  }
+
+  /* Button touch optimization */
+  .btn {
+    min-height: 44px;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Utility classes for mobile */
+  .py-10 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Header mobile spacing */
+  header {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  header p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+/* Small mobile devices (320px - 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .input-group {
+    max-width: 100%;
+  }
+
+  .input-field {
+    font-size: 0.9375rem;
+    padding-right: 6.5rem;
+  }
+
+  .input-btn {
+    padding: 0 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .glass-card {
+    padding: 1rem;
+  }
+}
+
+/* Tablet devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .glass-card {
+    padding: 1.5rem;
+  }
+
+  .input-field {
+    font-size: 1.05rem;
+  }
+}
+
+/* Desktop devices (1024px+) */
+@media (min-width: 1024px) {
+
+  /* Ensure optimal spacing on large screens */
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 767px) and (orientation: landscape) {
+  header {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  header p {
+    font-size: 0.875rem;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 48px;
+  }
+
+  .glass-card:hover {
+    transform: none;
+  }
+
+  .btn-primary:hover {
+    transform: none;
+  }
+}

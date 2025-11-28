@@ -29,13 +29,13 @@ function App() {
     <div className="container py-10 flex-1 flex flex-col items-center justify-center min-h-screen">
       <Header />
 
-      <main className="w-full max-w-4xl mx-auto px-4">
+      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4">
         <UrlInput onSearch={handleSearch} isLoading={loading} />
 
         <PlatformIcons />
 
         {error && (
-          <div className="mt-8 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-center animate-fade-in">
+          <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-center animate-fade-in mx-2 sm:mx-0">
             {error}
           </div>
         )}
@@ -43,7 +43,7 @@ function App() {
         {result && <ResultCard data={result} />}
       </main>
 
-      <footer className="mt-auto py-6 text-center text-gray-500 text-sm">
+      <footer className="mt-auto py-4 sm:py-6 text-center text-gray-500 text-xs sm:text-sm px-4">
         <p>© {new Date().getFullYear()} Universal Downloader. All rights reserved.</p>
       </footer>
     </div>

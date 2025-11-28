@@ -13,11 +13,11 @@ const platforms = [
 
 const PlatformIcons = () => {
     return (
-        <div className="flex flex-wrap justify-center gap-4 my-8 animate-fade-in delay-100">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 my-6 sm:my-8 px-2 animate-fade-in delay-100">
             {platforms.map((platform) => (
                 <span
                     key={platform.name}
-                    className="px-3 py-1 rounded-full text-sm font-medium glass text-gray-300 border border-white/10"
+                    className="px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium glass text-gray-300 border border-white/10"
                 >
                     {platform.name}
                 </span>

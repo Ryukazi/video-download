@@ -46,8 +46,8 @@ const ResultCard = ({ data }) => {
     }
 
     return (
-        <div className="glass-card max-w-2xl mx-auto mt-10 animate-fade-in delay-300">
-            <div className="flex flex-col gap-6">
+        <div className="glass-card max-w-2xl mx-auto mt-6 sm:mt-8 md:mt-10 animate-fade-in delay-300">
+            <div className="flex flex-col gap-4 sm:gap-6">
                 {videoUrl ? (
                     <div className="w-full rounded-lg overflow-hidden shadow-lg bg-black aspect-video">
                         <video
@@ -55,6 +55,7 @@ const ResultCard = ({ data }) => {
                             poster={thumbnail}
                             controls
                             className="w-full h-full object-contain"
+                            playsInline
                         >
                             Your browser does not support the video tag.
                         </video>
@@ -78,7 +79,7 @@ const ResultCard = ({ data }) => {
                         </span>
                     )}
 
-                    <h3 className="text-xl font-bold mb-2 line-clamp-2">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 line-clamp-2">
                         {description}
                     </h3>
 

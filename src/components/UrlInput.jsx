@@ -11,7 +11,7 @@ const UrlInput = ({ onSearch, isLoading }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="input-group animate-fade-in delay-200">
+        <form onSubmit={handleSubmit} className="input-group animate-fade-in delay-200 w-full px-2 sm:px-0">
             <input
                 type="text"
                 className="input-field"
