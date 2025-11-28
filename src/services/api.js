@@ -68,6 +68,7 @@ const ANIME_CHARACTERS = ['luffy', 'zoro', 'ichigo'];
  */
 export const fetchPinterestImages = async (query) => {
     try {
+        // Use the Vercel rewrite proxy to avoid CORS
         const response = await fetch(`/api/pinterest/search-download?query=${encodeURIComponent(query)}`);
 
         if (!response.ok) {
