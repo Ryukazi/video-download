@@ -13,34 +13,34 @@ const ResultCard = ({ data }) => {
     let isAudio = false;
 
     if (platform === 'TikTok') {
-        // TikTok: result.videos[0] or result.video or result.videoHd
-        mediaUrl = result?.videos?.[0] || result?.video || result?.videoHd;
+        // TikTok: Prioritize videoHd, then video, then videos[0]
+        mediaUrl = result?.videoHd || result?.video || result?.videos?.[0];
         description = result?.description || 'TikTok Video';
         creator = result?.creator || data.creator;
         thumbnail = result?.thumbnail;
     } else if (platform === 'YouTube') {
-        // YouTube: result.mp4
-        mediaUrl = result?.mp4;
+        // YouTube: mp4 or url
+        mediaUrl = result?.mp4 || result?.url;
         description = result?.title || 'YouTube Video';
         creator = result?.creator || data.creator;
     } else if (platform === 'Instagram') {
-        // Instagram: result.data.videoUrl
-        mediaUrl = result?.data?.videoUrl;
+        // Instagram: data.videoUrl or videoUrl or root videoUrl
+        mediaUrl = result?.data?.videoUrl || result?.videoUrl || data?.videoUrl;
         description = result?.data?.filename || 'Instagram Video';
         creator = data.creator;
         thumbnail = result?.data?.thumbnail;
     } else if (platform === 'Facebook') {
-        // Facebook: result.data[0].hd_link or sd_link
+        // Facebook: hd_link or sd_link
         mediaUrl = result?.data?.[0]?.hd_link || result?.data?.[0]?.sd_link;
         description = result?.data?.[0]?.title || 'Facebook Video';
         creator = result?.creator || data.creator;
         thumbnail = result?.data?.[0]?.thumbnail;
-    } else if (platform === 'Twitter') {
-        // Twitter: result.medias[0].media
-        mediaUrl = result?.medias?.[0]?.media;
-        description = result?.caption || 'Twitter Video';
+    } else if (platform === 'Twitter' || platform === 'Pinterest') {
+        // Twitter & Pinterest: url
+        mediaUrl = result?.url;
+        description = result?.caption || result?.title || `${platform} Video`;
         creator = result?.author || data.creator;
-        thumbnail = result?.medias?.[0]?.thumbnail;
+        thumbnail = result?.thumbnail || result?.medias?.[0]?.thumbnail;
     } else if (platform === 'Reddit') {
         // Reddit: result.data.medias[0].url
         mediaUrl = result?.data?.medias?.[0]?.url;
@@ -56,7 +56,7 @@ const ResultCard = ({ data }) => {
         isAudio = true;
     } else {
         // Generic fallback
-        mediaUrl = result?.url || result?.video || result?.mp4;
+        mediaUrl = result?.url || result?.video || result?.mp4 || result?.videoHd;
         description = result?.title || result?.description || 'Media Found';
         creator = result?.creator || data.creator;
         thumbnail = result?.thumbnail;
