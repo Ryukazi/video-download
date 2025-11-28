@@ -1,4 +1,26 @@
-const API_BASE_URL = '/api';
+const API_ENDPOINTS = {
+    instagram: (url) => `/api/instagram?url=${encodeURIComponent(url)}`,
+    tiktok: (url) => `/api/tiktok?url=${encodeURIComponent(url)}`,
+    youtube: (url) => `/api/youtube?url=${encodeURIComponent(url)}`,
+    facebook: (url) => `/api/facebook?url=${encodeURIComponent(url)}`,
+    pinterest: (url) => `/api/pinterest?url=${encodeURIComponent(url)}`,
+    twitter: (url) => `/api/twitter?url=${encodeURIComponent(url)}`,
+    reddit: (url) => `/api/reddit?url=${encodeURIComponent(url)}`,
+    spotify: (url) => `/api/spotify?url=${encodeURIComponent(url)}`
+};
+
+const chooseApiUrl = (url) => {
+    const lowerUrl = url.toLowerCase();
+    if (lowerUrl.includes('instagram.com') || lowerUrl.includes('instagr.am')) return API_ENDPOINTS.instagram(url);
+    if (lowerUrl.includes('tiktok.com') || lowerUrl.includes('vm.tiktok.com') || lowerUrl.includes('vt.tiktok.com')) return API_ENDPOINTS.tiktok(url);
+    if (lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be')) return API_ENDPOINTS.youtube(url);
+    if (lowerUrl.includes('facebook.com') || lowerUrl.includes('fb.watch') || lowerUrl.includes('fb.com')) return API_ENDPOINTS.facebook(url);
+    if (lowerUrl.includes('pinterest.com') || lowerUrl.includes('pin.it')) return API_ENDPOINTS.pinterest(url);
+    if (lowerUrl.includes('twitter.com') || lowerUrl.includes('x.com') || lowerUrl.includes('t.co')) return API_ENDPOINTS.twitter(url);
+    if (lowerUrl.includes('reddit.com')) return API_ENDPOINTS.reddit(url);
+    if (lowerUrl.includes('spotify.com')) return API_ENDPOINTS.spotify(url);
+    return null;
+};
 
 /**
  * Fetches video data from the Universal Downloader API.
@@ -9,31 +31,12 @@ export const fetchVideoData = async (url) => {
     try {
         console.log('fetchVideoData called with URL:', url);
 
-        // Detect platform from URL
-        let endpoint = '';
-        const lowerUrl = url.toLowerCase();
+        const fetchUrl = chooseApiUrl(url);
 
-        if (lowerUrl.includes('instagram.com') || lowerUrl.includes('instagr.am')) {
-            endpoint = '/instagram';
-        } else if (lowerUrl.includes('tiktok.com') || lowerUrl.includes('vm.tiktok.com')) {
-            endpoint = '/tiktok';
-        } else if (lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be')) {
-            endpoint = '/youtube';
-        } else if (lowerUrl.includes('facebook.com') || lowerUrl.includes('fb.watch') || lowerUrl.includes('fb.com')) {
-            endpoint = '/facebook';
-        } else if (lowerUrl.includes('pinterest.com') || lowerUrl.includes('pin.it')) {
-            endpoint = '/pinterest';
-        } else if (lowerUrl.includes('twitter.com') || lowerUrl.includes('x.com') || lowerUrl.includes('t.co')) {
-            endpoint = '/twitter';
-        } else if (lowerUrl.includes('reddit.com')) {
-            endpoint = '/reddit';
-        } else if (lowerUrl.includes('spotify.com')) {
-            endpoint = '/spotify';
-        } else {
+        if (!fetchUrl) {
             throw new Error('Unsupported platform. Please check the URL and try again.');
         }
 
-        const fetchUrl = `${API_BASE_URL}${endpoint}?url=${encodeURIComponent(url)}`;
         console.log('Fetching from API:', fetchUrl);
 
         const response = await fetch(fetchUrl, {
