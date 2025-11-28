@@ -68,7 +68,7 @@ const ANIME_CHARACTERS = ['luffy', 'zoro', 'ichigo'];
  */
 export const fetchPinterestImages = async (query) => {
     try {
-        const response = await fetch(`https://denish-pin.vercel.app/api/search-download?query=${encodeURIComponent(query)}`);
+        const response = await fetch(`/api/pinterest/search-download?query=${encodeURIComponent(query)}`);
 
         if (!response.ok) {
             throw new Error('Failed to fetch Pinterest images');
