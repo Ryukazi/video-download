@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://universal-dl-one.vercel.app/api';
+const API_BASE_URL = '/api';
 
 /**
  * Fetches video data from the Universal Downloader API.
