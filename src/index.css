@@ -191,6 +191,11 @@ h1 {
   filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.3));
 }
 
+.floating-bg-char {
+  animation: float 10s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
 }

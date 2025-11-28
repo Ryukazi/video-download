@@ -1,12 +1,12 @@
 const API_ENDPOINTS = {
-    instagram: (url) => `https://universal-dl-one.vercel.app/api/instagram?url=${encodeURIComponent(url)}`,
-    tiktok: (url) => `https://universal-dl-one.vercel.app/api/tiktok?url=${encodeURIComponent(url)}`,
-    youtube: (url) => `https://universal-dl-one.vercel.app/api/youtube?url=${encodeURIComponent(url)}`,
-    facebook: (url) => `https://universal-dl-one.vercel.app/api/facebook?url=${encodeURIComponent(url)}`,
-    pinterest: (url) => `https://universal-dl-one.vercel.app/api/pinterest?url=${encodeURIComponent(url)}`,
-    twitter: (url) => `https://universal-dl-one.vercel.app/api/twitter?url=${encodeURIComponent(url)}`,
-    reddit: (url) => `https://universal-dl-one.vercel.app/api/reddit?url=${encodeURIComponent(url)}`,
-    spotify: (url) => `https://universal-dl-one.vercel.app/api/spotify?url=${encodeURIComponent(url)}`
+    instagram: (url) => `/api/instagram?url=${encodeURIComponent(url)}`,
+    tiktok: (url) => `/api/tiktok?url=${encodeURIComponent(url)}`,
+    youtube: (url) => `/api/youtube?url=${encodeURIComponent(url)}`,
+    facebook: (url) => `/api/facebook?url=${encodeURIComponent(url)}`,
+    pinterest: (url) => `/api/pinterest?url=${encodeURIComponent(url)}`,
+    twitter: (url) => `/api/twitter?url=${encodeURIComponent(url)}`,
+    reddit: (url) => `/api/reddit?url=${encodeURIComponent(url)}`,
+    spotify: (url) => `/api/spotify?url=${encodeURIComponent(url)}`
 };
 
 const chooseApiUrl = (url) => {
