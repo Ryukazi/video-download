@@ -59,7 +59,7 @@ export const fetchVideoData = async (url) => {
 };
 
 // Anime characters for Pinterest search
-const ANIME_CHARACTERS = ['luffy', 'zoro', 'ichigo', 'goku', 'shi hao'];
+const ANIME_CHARACTERS = ['luffy', 'zoro', 'ichigo'];
 
 /**
  * Fetches anime images from Pinterest API
