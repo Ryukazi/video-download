@@ -5,53 +5,71 @@ const ResultCard = ({ data }) => {
 
     const { platform, result } = data;
 
-    // Extract video URL based on platform
-    let videoUrl = null;
+    // Extract video/audio URL, description, creator, and thumbnail based on platform
+    let mediaUrl = null;
     let description = '';
     let creator = '';
     let thumbnail = null;
+    let isAudio = false;
 
     if (platform === 'TikTok') {
-        videoUrl = result?.data?.video_url || result?.video || result?.videoHd || (result?.videos && result.videos[0]);
-        description = result?.data?.title || result?.description || 'TikTok Video';
-        creator = result?.data?.author || result?.creator || data.creator;
+        // TikTok: result.videos[0] or result.video or result.videoHd
+        mediaUrl = result?.videos?.[0] || result?.video || result?.videoHd;
+        description = result?.description || 'TikTok Video';
+        creator = result?.creator || data.creator;
+        thumbnail = result?.thumbnail;
     } else if (platform === 'YouTube') {
-        videoUrl = result?.mp4 || result?.url || result?.video;
-        description = result?.title || result?.description || 'YouTube Video';
-        creator = result?.author || result?.creator;
+        // YouTube: result.mp4
+        mediaUrl = result?.mp4;
+        description = result?.title || 'YouTube Video';
+        creator = result?.creator || data.creator;
     } else if (platform === 'Instagram') {
-        videoUrl = result?.url || (result?.downloads && result.downloads[result.downloads.length - 1]) || result?.video;
-        description = result?.title || result?.description || 'Instagram Video';
-        creator = result?.author || result?.creator;
+        // Instagram: result.data.videoUrl
+        mediaUrl = result?.data?.videoUrl;
+        description = result?.data?.filename || 'Instagram Video';
+        creator = data.creator;
+        thumbnail = result?.data?.thumbnail;
     } else if (platform === 'Facebook') {
-        videoUrl = result?.data?.[0]?.hd_link || result?.data?.[0]?.sd_link || result?.video;
-        description = result?.title || result?.description || 'Facebook Video';
-        creator = result?.author || result?.creator;
-    } else if (platform === 'Pinterest' || platform === 'Twitter') {
-        videoUrl = result?.url || result?.video;
-        description = result?.title || result?.description || `${platform} Video`;
-        creator = result?.author || result?.creator;
+        // Facebook: result.data[0].hd_link or sd_link
+        mediaUrl = result?.data?.[0]?.hd_link || result?.data?.[0]?.sd_link;
+        description = result?.data?.[0]?.title || 'Facebook Video';
+        creator = result?.creator || data.creator;
+        thumbnail = result?.data?.[0]?.thumbnail;
+    } else if (platform === 'Twitter') {
+        // Twitter: result.medias[0].media
+        mediaUrl = result?.medias?.[0]?.media;
+        description = result?.caption || 'Twitter Video';
+        creator = result?.author || data.creator;
+        thumbnail = result?.medias?.[0]?.thumbnail;
+    } else if (platform === 'Reddit') {
+        // Reddit: result.data.medias[0].url
+        mediaUrl = result?.data?.medias?.[0]?.url;
+        description = result?.data?.title || 'Reddit Video';
+        creator = result?.data?.author || data.creator;
+        thumbnail = result?.data?.thumbnail;
+    } else if (platform === 'Spotify') {
+        // Spotify: result.data.downloadLinks[0].url (audio)
+        mediaUrl = result?.data?.downloadLinks?.[0]?.url;
+        description = result?.data?.title || 'Spotify Track';
+        creator = result?.data?.author || data.creator;
+        thumbnail = result?.data?.thumbnail;
+        isAudio = true;
     } else {
         // Generic fallback
-        videoUrl = result?.url || result?.video || result?.videoHd || (result?.videos && result.videos[0]);
-        description = result?.description || result?.title || 'Video Found';
+        mediaUrl = result?.url || result?.video || result?.mp4;
+        description = result?.title || result?.description || 'Media Found';
         creator = result?.creator || data.creator;
-    }
-
-    // Get thumbnail
-    if (result?.images && result.images.length > 0) {
-        thumbnail = result.images[0];
-    } else if (result?.thumbnail) {
-        thumbnail = result.thumbnail;
+        thumbnail = result?.thumbnail;
     }
 
     return (
         <div className="glass-card max-w-2xl mx-auto mt-6 sm:mt-8 md:mt-10 animate-fade-in delay-300">
             <div className="flex flex-col gap-4 sm:gap-6">
-                {videoUrl ? (
+                {/* Media Player */}
+                {mediaUrl && !isAudio ? (
                     <div className="w-full rounded-lg overflow-hidden shadow-lg bg-black aspect-video">
                         <video
-                            src={videoUrl}
+                            src={mediaUrl}
                             poster={thumbnail}
                             controls
                             className="w-full h-full object-contain"
@@ -60,18 +78,36 @@ const ResultCard = ({ data }) => {
                             Your browser does not support the video tag.
                         </video>
                     </div>
+                ) : isAudio && mediaUrl ? (
+                    <div className="w-full rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-6">
+                        {thumbnail && (
+                            <img
+                                src={thumbnail}
+                                alt={description}
+                                className="w-32 h-32 mx-auto rounded-lg shadow-lg object-cover mb-4"
+                            />
+                        )}
+                        <audio
+                            src={mediaUrl}
+                            controls
+                            className="w-full"
+                        >
+                            Your browser does not support the audio tag.
+                        </audio>
+                    </div>
                 ) : (
                     thumbnail && (
                         <div className="w-full">
                             <img
                                 src={thumbnail}
-                                alt={description || 'Video thumbnail'}
+                                alt={description || 'Media thumbnail'}
                                 className="w-full h-auto rounded-lg shadow-lg object-cover aspect-video"
                             />
                         </div>
                     )
                 )}
 
+                {/* Media Info */}
                 <div className="flex-1">
                     {platform && (
                         <span className="text-xs font-bold uppercase tracking-wider text-accent mb-2 block">
@@ -89,20 +125,21 @@ const ResultCard = ({ data }) => {
                         </p>
                     )}
 
+                    {/* Download Button */}
                     <div className="flex flex-col gap-3 mt-4">
-                        {videoUrl && (
+                        {mediaUrl && (
                             <a
-                                href={videoUrl}
+                                href={mediaUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-primary w-full text-center"
                                 download
                             >
-                                Download Video
+                                {isAudio ? '🎵 Download Audio' : '📥 Download Video'}
                             </a>
                         )}
 
-                        {!videoUrl && (
+                        {!mediaUrl && (
                             <p className="text-red-400 text-sm">No download links found.</p>
                         )}
                     </div>
