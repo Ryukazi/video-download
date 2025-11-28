@@ -106,3 +106,36 @@ export const getRandomAnimeBackground = async () => {
         return null;
     }
 };
+
+/**
+ * Gets multiple random anime character images
+ * @param {number} count - Number of images to fetch
+ * @returns {Promise<string[]>} - Array of image URLs
+ */
+export const getRandomCharacters = async (count = 5) => {
+    try {
+        const images = [];
+        const usedChars = new Set();
+
+        // Try to get unique characters
+        for (let i = 0; i < count; i++) {
+            let randomChar = ANIME_CHARACTERS[Math.floor(Math.random() * ANIME_CHARACTERS.length)];
+
+            // Simple retry to avoid duplicates if possible
+            if (usedChars.has(randomChar)) {
+                randomChar = ANIME_CHARACTERS[Math.floor(Math.random() * ANIME_CHARACTERS.length)];
+            }
+            usedChars.add(randomChar);
+
+            const data = await fetchPinterestImages(randomChar);
+            if (data && data.data && data.data.length > 0) {
+                const randomImage = data.data[Math.floor(Math.random() * data.data.length)];
+                images.push(randomImage);
+            }
+        }
+        return images;
+    } catch (error) {
+        console.error('Error getting random characters:', error);
+        return [];
+    }
+};

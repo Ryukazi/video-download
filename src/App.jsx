@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Hero from './components/Hero';
+import FloatingCharacters from './components/FloatingCharacters';
 import UrlInput from './components/UrlInput';
 import PlatformIcons from './components/PlatformIcons';
 import ResultCard from './components/ResultCard';
@@ -26,10 +27,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
+      <FloatingCharacters />
       <Hero />
 
-      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4 pb-10">
+      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4 pb-10 z-10 relative">
         <UrlInput onSearch={handleSearch} isLoading={loading} />
 
         <PlatformIcons />
