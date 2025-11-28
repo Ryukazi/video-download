@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
+import Hero from './components/Hero';
 import UrlInput from './components/UrlInput';
 import PlatformIcons from './components/PlatformIcons';
 import ResultCard from './components/ResultCard';
@@ -26,10 +26,10 @@ function App() {
   };
 
   return (
-    <div className="container py-10 flex-1 flex flex-col items-center justify-center min-h-screen">
-      <Header />
+    <div className="min-h-screen flex flex-col">
+      <Hero />
 
-      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4">
+      <main className="w-full max-w-4xl mx-auto px-2 sm:px-4 pb-10">
         <UrlInput onSearch={handleSearch} isLoading={loading} />
 
         <PlatformIcons />
@@ -48,6 +48,7 @@ function App() {
       </footer>
     </div>
   );
+}
 }
 
 export default App;

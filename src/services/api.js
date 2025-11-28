@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'https://universal-dl-one.vercel.app/';
 
 /**
  * Fetches video data from the Universal Downloader API.
@@ -55,5 +55,54 @@ export const fetchVideoData = async (url) => {
     } catch (error) {
         console.error('API Error:', error);
         throw error;
+    }
+};
+
+// Anime characters for Pinterest search
+const ANIME_CHARACTERS = ['luffy', 'zoro', 'ichigo', 'goku', 'shi hao'];
+
+/**
+ * Fetches anime images from Pinterest API
+ * @param {string} query - Search query (character name)
+ * @returns {Promise<object>} - The JSON response with image URLs
+ */
+export const fetchPinterestImages = async (query) => {
+    try {
+        const response = await fetch(`https://denish-pin.vercel.app/api/search-download?query=${encodeURIComponent(query)}`);
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch Pinterest images');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Pinterest API Error:', error);
+        return null;
+    }
+};
+
+/**
+ * Gets a random anime character background image
+ * @returns {Promise<string>} - Random image URL
+ */
+export const getRandomAnimeBackground = async () => {
+    try {
+        // Select random character
+        const randomChar = ANIME_CHARACTERS[Math.floor(Math.random() * ANIME_CHARACTERS.length)];
+
+        // Fetch images for that character
+        const data = await fetchPinterestImages(randomChar);
+
+        if (data && data.data && data.data.length > 0) {
+            // Return random image from results
+            const randomImage = data.data[Math.floor(Math.random() * data.data.length)];
+            return randomImage;
+        }
+
+        return null;
+    } catch (error) {
+        console.error('Error getting anime background:', error);
+        return null;
     }
 };
